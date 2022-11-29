@@ -6,6 +6,11 @@ function ListAllDecks({ allDecks, setDecks}) {
   console.log("the current AllDecks array is:", allDecks);
   //0 {id: 1, name: 'Rendering in React', description: "React's component structure allows for quickly bui…web application that relies on DOM manipulation. ", cards: Array(4)}
   //1 {id: 2, name: 'React Router', description: 'React Router is a collection of navigational compo…that compose declaratively with your application.', cards: Array(2)}
+const deleteClick = (id) => {
+  if (window.confirm("Do you really wish to delete this deck?")) {
+    deleteDeckHandler(id, setDecks, allDecks) 
+  }
+} 
 
   // while initially fetching the decks show loading (note this would also show when there are no decks. . .  should fix eventually ((I could just swap this to the not found function)))
   if (allDecks.length === 0) {
@@ -31,7 +36,7 @@ function ListAllDecks({ allDecks, setDecks}) {
                 <Link to={`/decks/${currentDeck.id}/study`} type="button" className="btn btn-secondary mx-1">
                 <span className="oi oi-book"></span> Study
                 </Link>
-                <button type="button" className="btn btn-danger mx-1 float-right" onClick={() => deleteDeckHandler(currentDeck.id, setDecks, allDecks)}>
+                <button type="button" className="btn btn-danger mx-1 float-right" onClick={() => deleteClick(currentDeck.id)}>
                 <span className="oi oi-trash"></span>
                 </button>
               </div>

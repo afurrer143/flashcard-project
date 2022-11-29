@@ -1,9 +1,25 @@
-function CardList({ cards, cardsLoaded }) {
+import { Link, useRouteMatch } from "react-router-dom";
+
+
+function CardList({ cards, cardsLoaded, routeMatch }) {
   if (!cardsLoaded || cards?.length === 0) {
-    return <p>Loading info</p>;
+    return (
+      <>
+      <hr />
+        <h4>No Cards Available</h4>
+        <p>Would you like to add some?</p>
+        <Link
+          to={`${routeMatch.url}/cards/new`}
+          type="button"
+          className="btn btn-primary mx-2 p-0 py-2 col-12"
+        >
+          <span className="oi oi-plus"></span> Add Cards
+        </Link>
+      </>
+    );
   } else {
     return (
-      <ul>
+      <>
         {cards?.map((currentCard, i) => {
           // console.log("The current card in cards.map is", currentCard);
           return (
@@ -27,7 +43,7 @@ function CardList({ cards, cardsLoaded }) {
             </div>
           );
         })}
-      </ul>
+      </>
     );
 
     // need a return here later gater

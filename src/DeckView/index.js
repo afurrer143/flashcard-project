@@ -15,6 +15,9 @@ function DeckView({ allDecks, setDecks, decks, allDecksLoaded }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!allDecksLoaded) {
+      // just parking this here trying to limit all my API calls
+    }
     setCards([]);
     const abortController = new AbortController();
     async function loadCards() {
@@ -30,16 +33,17 @@ function DeckView({ allDecks, setDecks, decks, allDecksLoaded }) {
       }
     }
     loadCards();
+    // console.log("CARDS IS", cards);
     return () => abortController.abort();
-  }, [allDecks, routeMatch]);
+  }, [allDecksLoaded, routeMatch]);
   
-  console.log("CARDS IS", cards);
+
   return (
     <>
       {/* For the view page */}
       <Route exact path={routeMatch.path}>
         <NavigationBar DeckView={true} allDecks={allDecks} />
-        <ViewDeck currentDeck={currentDeck} cards={cards} setDecks={setDecks} allDecks={allDecks} cardsLoaded={cardsLoaded} error={error}/>
+        <ViewDeck currentDeck={currentDeck} cards={cards} setDecks={setDecks} allDecks={allDecks} cardsLoaded={cardsLoaded} error={error} routeMatch={routeMatch}/>
       </Route>
       {/* for the study page */}
       <Route path={`${routeMatch.path}/study`}>

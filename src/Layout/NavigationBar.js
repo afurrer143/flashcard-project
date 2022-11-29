@@ -10,8 +10,8 @@ function NavigationBar({
   StudyView = false,
 }) {
   const routeMatch = useRouteMatch();
-  console.log("Route Match is", routeMatch);
-  console.log("All decks is", allDecks);
+  // console.log("Route Match is", routeMatch);
+  // console.log("All decks is", allDecks);
 
   let title = null;
 
