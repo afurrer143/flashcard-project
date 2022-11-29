@@ -14,7 +14,7 @@ function NavigationBar({
   console.log("All decks is", allDecks);
   
 
-  let title = "loading . . .";
+  let title = null;
 
   // HELPER FUNCTION TO CHECK DECKS WORK AND SET THE TITLE
 //   function checkDecksValidAndSetTitle(allDecks) {
@@ -33,8 +33,15 @@ function NavigationBar({
 // TESTING NEW CHECK DECK VALIDATE CAUSE IF I DELETE A DECK IT HECKS THAT ONE UP
 // Need to use .find on allDecks array and find a allDecks.id matches the :deckId in URL
 function checkDecksValidAndSetTitle(allDecks) {
-    if (allDecks.length != 0) { //if all decks length does NOt equal 0
-
+    if (allDecks.length !== 0) { //if all decks length does NOt equal 0
+        let matchingDeckId = allDecks.find((currentDeck) => {
+            return Number(currentDeck.id) === Number(routeMatch.params.deckId)     
+        })       
+        if (matchingDeckId) { //when a match is found from the .find title will be its .name
+            title = matchingDeckId.name
+        } else{ //if no match found, the navbar displays what the deck id params from URL is
+            title = `Deck ${routeMatch.params.deckId}`
+        }
     }
 }
 
