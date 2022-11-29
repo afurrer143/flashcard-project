@@ -12,38 +12,26 @@ function NavigationBar({
   const routeMatch = useRouteMatch();
   console.log("Route Match is", routeMatch);
   console.log("All decks is", allDecks);
-  
 
   let title = null;
 
-  // HELPER FUNCTION TO CHECK DECKS WORK AND SET THE TITLE
-//   function checkDecksValidAndSetTitle(allDecks) {
-//     if (allDecks.length === 0) {
-//       // i cant get ! to work...so yeah this is here
-//     } else {
-//     //   Validate the params deck ID is valid
-//       if (routeMatch.params.deckId - 1 < allDecks.length && routeMatch.params.deckId - 1 >=0 ) {
-//         title = allDecks[routeMatch.params.deckId - 1].name;
-//       } else {
-//         title = `Deck ${routeMatch.params.deckId}`;
-//       }
-//     }
-//   }
-
-// TESTING NEW CHECK DECK VALIDATE CAUSE IF I DELETE A DECK IT HECKS THAT ONE UP
-// Need to use .find on allDecks array and find a allDecks.id matches the :deckId in URL
-function checkDecksValidAndSetTitle(allDecks) {
-    if (allDecks.length !== 0) { //if all decks length does NOt equal 0
-        let matchingDeckId = allDecks.find((currentDeck) => {
-            return Number(currentDeck.id) === Number(routeMatch.params.deckId)     
-        })       
-        if (matchingDeckId) { //when a match is found from the .find title will be its .name
-            title = matchingDeckId.name
-        } else{ //if no match found, the navbar displays what the deck id params from URL is
-            title = `Deck ${routeMatch.params.deckId}`
-        }
+  // TESTING NEW CHECK DECK VALIDATE CAUSE IF I DELETE A DECK IT HECKS THAT ONE UP
+  // Need to use .find on allDecks array and find a allDecks.id matches the :deckId in URL
+  function checkDecksValidAndSetTitle(allDecks) {
+    if (allDecks.length !== 0) {
+      //if all decks length does NOt equal 0
+      let matchingDeckId = allDecks.find((currentDeck) => {
+        return Number(currentDeck.id) === Number(routeMatch.params.deckId);
+      });
+      if (matchingDeckId) {
+        //when a match is found from the .find title will be its .name
+        title = matchingDeckId.name;
+      } else {
+        //if no match found, the navbar displays what the deck id params from URL is
+        title = `Deck ${routeMatch.params.deckId}`;
+      }
     }
-}
+  }
 
   //   NAV BAR IN DECK VIEW (NEEDS A VARIABLE FOR THE TITLE)
   if (DeckView) {
@@ -55,17 +43,22 @@ function checkDecksValidAndSetTitle(allDecks) {
 
     // NAV BAR IN STUDY PAGE...i am just gonna return here with a 2nd link added :skull:
   } else if (StudyView) {
-    checkDecksValidAndSetTitle(allDecks)
-    
+    checkDecksValidAndSetTitle(allDecks);
+
     return (
       <div className="bg-light mb-4 py-3">
         <Link to="/" className="text-primary">
           Home /
         </Link>
-        <Link to={`/decks/${routeMatch.params.deckId}`} className="text-primary">
+        <Link
+          to={`/decks/${routeMatch.params.deckId}`}
+          className="text-primary"
+        >
           {title} /
         </Link>
-        <Link to={`${routeMatch.url}`} className="text-secondary">Study</Link>
+        <Link to={`${routeMatch.url}`} className="text-secondary">
+          Study
+        </Link>
       </div>
     );
   }

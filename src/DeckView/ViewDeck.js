@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-function ViewDeck({ currentDeck }) {
-  const [cardList, setCardList] = useState([]);
+import CardList from "./CardList";
+import deleteDeckHandler from "../HomePage/deleteDeckHandler";
 
-  useEffect(() => {
-    function currentDeckMap(currentDeck) {
-      if (currentDeck !== 0) {
-        let listedCards = currentDeck?.cards.map((currentCard, i) => {
-          console.log(currentCard);
-        });
-      }
-      currentDeckMap();
-    }
-  }, []);
+function ViewDeck({ currentDeck, cards, setDecks, allDecks, cardsLoaded, error }) {
 
-  console.log("Current Deck is", currentDeck);
+  if (error) {
+    return error.message
+  }
   return (
     <div>
       <h3> {currentDeck?.name} </h3>
@@ -26,10 +18,10 @@ function ViewDeck({ currentDeck }) {
           type="button"
           className="btn btn-secondary mr-2 p-0 py-2 col-2"
         >
-          <span className="oi oi-pencil"></span> Edit
+          <span className="oi oi-pencil"></span> Edit (needs link)
         </Link>
         <Link
-          to={"/"}
+          to={`/decks/${currentDeck.id}/study`}
           type="button"
           className="btn btn-primary mx-2 p-0 py-2 col-2"
         >
@@ -40,17 +32,19 @@ function ViewDeck({ currentDeck }) {
           type="button"
           className="btn btn-primary mx-2 p-0 py-2 col-3"
         >
-          <span className="oi oi-plus"></span> Add Cards
+          <span className="oi oi-plus"></span> Add Cards (needs link)
         </Link>
         <button
           type="button"
           className="btn btn-danger ml-2 p-0 py-2 float-right col-1"
+          onClick={() => deleteDeckHandler(currentDeck.id, setDecks, allDecks)}
         >
           <span className="oi oi-trash"></span>
         </button>
       </div>
       <hr />
       <h2>Cards</h2>
+      <CardList currentDeck={currentDeck} cards={cards} cardsLoaded={cardsLoaded} />
     </div>
   );
 }

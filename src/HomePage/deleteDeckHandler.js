@@ -1,7 +1,6 @@
-
 import { deleteDeck } from "../utils/api";
 
-function deleteDeckHandler (deckId, setDecks, allDecks) {
+function DeleteDeckHandler (deckId, setDecks, allDecks) {
     const abortController = new AbortController();
     console.log("DELTETLETLEDLEYE")
     if (window.confirm("Do you really wish to delete this deck?")) {
@@ -10,4 +9,4 @@ function deleteDeckHandler (deckId, setDecks, allDecks) {
       }
 }
 
-export default deleteDeckHandler
+export default DeleteDeckHandler

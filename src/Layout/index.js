@@ -16,6 +16,7 @@ import { listDecks } from "../utils/api";
 
 function Layout() {
   const [allDecks, setAllDecks] = useState([]);
+  const [allDecksLoaded, setAllDecksLoaded] = useState(false)
   const [decks, setDecks] = useState([]); //not really used much. Used in delete handler to then force the useEffect to rerun with the new deck list (guess create deck will do a similar thing)
 
   // loads deck from the database
@@ -25,6 +26,7 @@ function Layout() {
       try {
         const allDecks = await listDecks();
         setAllDecks(allDecks);
+        setAllDecksLoaded(true)
       } catch (error) {
         throw error;
       }
@@ -56,7 +58,7 @@ function Layout() {
         {/* View decks and study page */}
         <Route path={"/decks/:deckId"}>
           <div className="container">
-            <DeckView DeckView={true} allDecks={allDecks}/>
+            <DeckView DeckView={true} allDecks={allDecks} setDecks={setDecks} decks={decks} allDecksLoaded={allDecksLoaded}/>
           </div>
         </Route>
 
