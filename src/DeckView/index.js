@@ -1,8 +1,11 @@
-import { Route, useRouteMatch } from "react-router-dom";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { readDeck } from "../utils/api";
 import ViewDeck from "./ViewDeck";
+import IndividualCard from "../Cards";
+import EditDeck from "./EditDeck";
+import StudyView from "../StudyView/StudyView";
 import NavigationBar from "../Layout/NavigationBar";
 
 function DeckView({ allDecks, setDecks, decks, allDecksLoaded }) {
@@ -11,8 +14,9 @@ function DeckView({ allDecks, setDecks, decks, allDecksLoaded }) {
 
   const [cards, setCards] = useState([]);
   const [currentDeck, setCurrentDeck] = useState([]);
-  const [cardsLoaded, setCardsLoaded] = useState(false)
+  const [cardsLoaded, setCardsLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const [reloadDeck, setReloadDeck] = useState(null) //Reload deck used to refresh the use effect below when a card is deleted
 
   useEffect(() => {
     if (!allDecksLoaded) {
@@ -23,34 +27,57 @@ function DeckView({ allDecks, setDecks, decks, allDecksLoaded }) {
     async function loadCards() {
       try {
         let deckID = routeMatch.params.deckId;
-        const specificDeck = await readDeck(deckID, abortController.signal)
-        setCurrentDeck(specificDeck)
-        setCards(specificDeck.cards)
-        setCardsLoaded(true)
+        const specificDeck = await readDeck(deckID, abortController.signal);
+        setCurrentDeck(specificDeck);
+        setCards(specificDeck.cards);
+        setCardsLoaded(true);
       } catch (err) {
         // so if i throw an error, it crashes. But that works...ish
-        setError(err)
+        setError(err);
       }
     }
     loadCards();
     // console.log("CARDS IS", cards);
     return () => abortController.abort();
-  }, [allDecksLoaded, routeMatch]);
-  
+  }, [allDecksLoaded, routeMatch, reloadDeck]);
 
   return (
-    <>
-      {/* For the view page */}
-      <Route exact path={routeMatch.path}>
-        <NavigationBar DeckView={true} allDecks={allDecks} />
-        <ViewDeck currentDeck={currentDeck} cards={cards} setDecks={setDecks} allDecks={allDecks} cardsLoaded={cardsLoaded} error={error} routeMatch={routeMatch}/>
-      </Route>
-      {/* for the study page */}
-      <Route path={`${routeMatch.path}/study`}>
-        <NavigationBar StudyView={true} allDecks={allDecks} />
-        <p>Studying</p>
-      </Route>
-    </>
+    <div>
+      <Switch>
+
+        {/* For the default view page */}
+        <Route exact path={routeMatch.path}>
+          <NavigationBar DeckView={true} allDecks={allDecks} />
+          <ViewDeck
+            currentDeck={currentDeck}
+            cards={cards}
+            setDecks={setDecks}
+            allDecks={allDecks}
+            setReloadDeck={setReloadDeck}
+            cardsLoaded={cardsLoaded}
+            error={error}
+            routeMatch={routeMatch}
+          />
+        </Route>
+
+        {/* edit a deck (title and desc) page */}
+        <Route path={`${routeMatch.path}/edit`}>
+        <NavigationBar editDeckView={true} allDecks={allDecks} />
+          <EditDeck currentDeck={currentDeck} cardsLoaded={cardsLoaded} setDecks={setDecks} />
+        </Route>
+
+        {/* for the study page */}
+        <Route path={`${routeMatch.path}/study`}>
+          <NavigationBar StudyView={true} allDecks={allDecks} />
+          <StudyView currentDeck={currentDeck} />
+        </Route>
+
+        {/* for cards themselves */}
+        <Route path={`${routeMatch.path}/cards`}>
+          <IndividualCard currentDeck={currentDeck} setReloadDeck={setReloadDeck} setDecks={setDecks} />
+        </Route>
+      </Switch>
+    </div>
   );
 }
 

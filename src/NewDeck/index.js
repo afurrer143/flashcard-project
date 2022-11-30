@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 
 import formSubmission from "./formSubmission";
 
 function CreateNewDeck({setDecks, allDecks}) {
   const history = useHistory();
+  const routeMatch = useRouteMatch();
 
   const initialFormState = {
     name: "",
@@ -24,8 +25,6 @@ function CreateNewDeck({setDecks, allDecks}) {
 
   const submitHandler = (event) => {
     formSubmission(event, formData, history, setDecks);
-    
-    
   };
 
   return (
@@ -58,15 +57,15 @@ function CreateNewDeck({setDecks, allDecks}) {
           className="form-control"
         />
       </div>
-      <button type="submit" className="btn-primary p-2 mx-3 col-1">
+      <button type="submit" className="btn-primary py-2 px-0 mx-3 col-1">
         Submit
       </button>
       <Link
-        to={"/"}
+        to={`/decks/${routeMatch.params.deckId}`}
         type="button"
-        className="btn-secondary p-2 mx-3 col-1 text-center"
+        className="btn-secondary py-2 px-0 mx-3 col-1 text-center"
       >
-        Cancel
+        Done
       </Link>
     </form>
   );

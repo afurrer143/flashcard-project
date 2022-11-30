@@ -5,13 +5,17 @@ import { useRouteMatch, Link } from "react-router-dom";
 // Later when I need to format my navigation bar more I can call it with optional params like link1 or 2 and add them to it
 function NavigationBar({
   allDecks = [],
+  currentDeck = [],
   DeckView = false,
   NewDeck = false,
   StudyView = false,
+  editDeckView = false,
+  EditCardView= false,
+  newCard = false,
 }) {
   const routeMatch = useRouteMatch();
-  // console.log("Route Match is", routeMatch);
-  // console.log("All decks is", allDecks);
+  //  console.log("Route Match is", routeMatch);
+  //  console.log("All decks is", allDecks);
 
   let title = null;
 
@@ -41,10 +45,29 @@ function NavigationBar({
   } else if (NewDeck) {
     title = "Create Deck";
 
+    //  Nav Bar when editing a deck
+  } else if (editDeckView) {
+    checkDecksValidAndSetTitle(allDecks); //WHY IS THIS NOT GOING HERE
+    return (
+      <div className="bg-light mb-4 py-3">
+        <Link to="/" className="text-primary">
+          Home /
+        </Link>
+        <Link
+          to={`/decks/${routeMatch.params.deckId}`}
+          className="text-primary"
+        >
+          {title} /
+        </Link>
+        <Link to={`${routeMatch.url}`} className="text-secondary">
+          Edit Deck
+        </Link>
+      </div>
+    );
+
     // NAV BAR IN STUDY PAGE...i am just gonna return here with a 2nd link added :skull:
   } else if (StudyView) {
     checkDecksValidAndSetTitle(allDecks);
-
     return (
       <div className="bg-light mb-4 py-3">
         <Link to="/" className="text-primary">
@@ -61,6 +84,47 @@ function NavigationBar({
         </Link>
       </div>
     );
+  } else if (newCard) {
+    // so i have current deck from here, but not all deck
+    title = currentDeck.name;
+    return (
+      <div className="bg-light mb-4 py-3">
+        <Link to="/" className="text-primary">
+          Home /
+        </Link>
+        <Link
+          to={`/decks/${routeMatch.params.deckId}`}
+          className="text-primary"
+        >
+          {title} /
+        </Link>
+        <Link to={routeMatch.url} className="text-secondary">
+          Add Card
+        </Link>
+      </div>
+    );
+  } else if (EditCardView) {    
+    if(currentDeck?.name){
+      title = currentDeck.name;
+    } else {
+      title = `Deck ${routeMatch.params.deckId}`
+    }
+    return (
+      <div className="bg-light mb-4 py-3">
+        <Link to="/" className="text-primary">
+          Home /
+        </Link>
+        <Link
+          to={`/decks/${routeMatch.params.deckId}`}
+          className="text-primary"
+        >
+          {title} /
+        </Link>
+        <Link to={routeMatch.url} className="text-secondary">
+          Edit Card {routeMatch.params.cardId}
+        </Link>
+      </div>
+    )
   }
 
   return (

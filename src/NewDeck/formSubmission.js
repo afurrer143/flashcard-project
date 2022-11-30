@@ -4,6 +4,9 @@ async function formSubmission(event, formData, history, setDecks) {
   event.preventDefault();
   const abortController = new AbortController();
   console.log("formData is", formData);
+  formData.name = formData.name.trim()
+  formData.description = formData.description.trim()
+  
   let newDeck = await createDeck(formData, abortController.signal);
 //   console.log("~~~~NEW DECK IS~~~~", newDeck);
   

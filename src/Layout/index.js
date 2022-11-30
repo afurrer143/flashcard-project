@@ -37,7 +37,7 @@ function Layout() {
   // console.log(allDecks);
 
   return (
-    <>
+    <div>
       <Header />
       <Switch>
         <Route exact path={"/"}>
@@ -68,7 +68,7 @@ function Layout() {
           <NotFound />
         </Route>
       </Switch>
-    </>
+    </div>
   );
 }
 
