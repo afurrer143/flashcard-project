@@ -1,4 +1,4 @@
-import { updateCard, readDeck } from "../utils/api";
+import { updateCard } from "../utils/api";
 
 async function submitEditCardHandler(event, formData, deck, setReloadDeck) {
     event.preventDefault();

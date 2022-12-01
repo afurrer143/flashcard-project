@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 
+import CardForm from "./CardFormBoilerPlate";
 import newCardSubmission from "./NewCardSubmission";
 
 function NewCard({ currentDeck, setDecks }) {
@@ -42,48 +43,7 @@ function NewCard({ currentDeck, setDecks }) {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div className="form-group">
-        <h2><span>{currentDeck?.name}</span>: Add Card</h2>
-        {newCardInfo}
-        <label htmlFor="front">Front</label>
-        <br />
-        <textarea
-          type="text"
-          id="front"
-          name="front"
-          required
-          rows={2}
-          placeholder="Front side of card"
-          onChange={handleChange}
-          value={formData.front}
-          className="form-control"
-        />
-        <label htmlFor="back">Back</label>
-        <br />
-        <textarea
-          type="text"
-          id="back"
-          name="back"
-          required
-          rows={2}
-          placeholder="Back side of card"
-          onChange={handleChange}
-          value={formData.back}
-          className="form-control"
-        />
-      </div>
-      <button type="submit" className="btn btn-primary py-2 px-0 mx-3 col-1">
-        Submit
-      </button>
-      <Link
-        to={`/decks/${routeMatch.params.deckId}`}
-        type="button"
-        className="btn btn-secondary py-2 px-0 mx-3 col-1 text-center"
-      >
-        Done
-      </Link>
-    </form>
+    <CardForm submitHandler={submitHandler} handleChange={handleChange} routeMatch={routeMatch} formData={formData} deck={currentDeck} subtitle={"New Card"}/>
   );
 }
 export default NewCard;

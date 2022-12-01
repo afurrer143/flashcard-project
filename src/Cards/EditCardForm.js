@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
+import CardForm from "./CardFormBoilerPlate";
 import submitEditCardHandler from "./submitEditCardHandler";
+
 
 function EditCardForm({ card, deck, routeMatch, setReloadDeck }) {
     const history = useHistory()
@@ -30,47 +32,7 @@ function EditCardForm({ card, deck, routeMatch, setReloadDeck }) {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div className="form-group">
-        <h2>Edit Card</h2>
-        <label htmlFor="front">Front</label>
-        <br />
-        <textarea
-          type="text"
-          id="front"
-          name="front"
-          required
-          rows={2}
-          placeholder="Front side of card"
-          onChange={handleChange}
-          value={formData?.front || ""}
-          className="form-control"
-        />
-        <label htmlFor="back">Back</label>
-        <br />
-        <textarea
-          type="text"
-          id="back"
-          name="back"
-          required
-          rows={2}
-          placeholder="Back side of card"
-          onChange={handleChange}
-          value={formData?.back || ""}
-          className="form-control"
-        />
-      </div>
-      <button type="submit" className="btn btn-primary py-2 px-0 mx-3 col-1">
-        Submit
-      </button>
-      <Link
-        to={`/decks/${routeMatch.params.deckId}`}
-        type="button"
-        className=" btn btn-secondary py-2 px-0 mx-3 col-1 text-center"
-      >
-        Cancel
-      </Link>
-    </form>
+    <CardForm submitHandler={submitHandler} handleChange={handleChange} routeMatch={routeMatch} formData={formData} deck={deck} subtitle={"Edit Card"} />
   );
 }
 
