@@ -10,4 +10,4 @@ On homepage all currently made decks are listend with information about them and
 
 Along with a button to create a new deck
 
-![Image of Homepage] (/screenshots/deckpage.png??raw=true)
+![Image of Homepage](/screenshots/deckpage.png??raw=true)
