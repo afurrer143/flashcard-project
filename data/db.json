@@ -11,8 +11,8 @@
       "id": 2
     },
     {
-      "name": "A New Deck I Made",
-      "description": "Showing off ability to add more",
+      "name": "A testing deck",
+      "description": "a testing grounds",
       "id": 3
     }
   ],
@@ -55,28 +55,10 @@
       "id": 7
     },
     {
-      "front": "A card I added",
-      "back": "some information",
+      "front": "What is the meaning of life",
+      "back": "42",
       "deckId": 3,
       "id": 8
-    },
-    {
-      "front": "A 2nd card since I can add as many as I want",
-      "back": "the back side of a really cool card",
-      "deckId": 3,
-      "id": 9
-    },
-    {
-      "front": "card",
-      "back": "more cards",
-      "deckId": 3,
-      "id": 10
-    },
-    {
-      "front": "The last card changes the next button to a restart button",
-      "back": "The last card changes the next button to a restart button",
-      "deckId": 3,
-      "id": 11
     }
   ]
 }

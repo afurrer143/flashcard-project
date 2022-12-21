@@ -17,6 +17,7 @@ function NewCard({ currentDeck, setDecks }) {
   const [newCard, setNewCard] = useState(null);
   const [newCardInfo, setNewCardInfo] = useState("");
 
+  // the page reloads, getting rid of this
   useEffect(() => {
     setNewCardInfo(null)
     if (newCard) {
@@ -36,14 +37,13 @@ function NewCard({ currentDeck, setDecks }) {
     });
   };
 
-  //   need to finish
   const submitHandler = (event) => {
     newCardSubmission(event, formData, history, currentDeck, setNewCard, setDecks);
     setFormData({ ...initialFormState });
   };
 
   return (
-    <CardForm submitHandler={submitHandler} handleChange={handleChange} routeMatch={routeMatch} formData={formData} deck={currentDeck} subtitle={"New Card"}/>
+    <CardForm submitHandler={submitHandler} handleChange={handleChange} routeMatch={routeMatch} formData={formData} deck={currentDeck} subtitle={"New Card"} newCardInfo={newCardInfo}/>
   );
 }
 export default NewCard;

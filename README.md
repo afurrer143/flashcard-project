@@ -41,3 +41,11 @@ Allows user to edit an individual card or a deck
 Pulls information to auto fill form with what the current thing edited has
 
 ![image of editing](./screenshots/editcard.png "Editing view")
+
+### Add Card to Deck Page
+
+Allows user to add cards to a flashcard deck
+
+And giving notification when a card is added to deck
+
+![image of adding card](./screenshots/addcard.png "Adding card view")

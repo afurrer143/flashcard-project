@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function CardForm({ submitHandler, handleChange, routeMatch, formData, deck, subtitle }) {
+function CardForm({ submitHandler, handleChange, routeMatch, formData, deck, subtitle, newCardInfo }) {
   return (
     <form onSubmit={submitHandler}>
       <div className="form-group">
+        {newCardInfo}
         <h2><span>"{deck?.name}" </span>{subtitle}</h2>
         <label htmlFor="front">Front</label>
         <br />
